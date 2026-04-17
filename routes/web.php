@@ -1,23 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\TicketController;
 
-Route::get('/', function () {
-    return ('<h1>Ini adalah Halaman Tentang Aplikasi Event Hub</h1>');
-});
+// Home
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/kontak', function () {
-return view('kontak');
-});
+// Event
+Route::get('/katalog', [EventController::class, 'show'])->name('events.show');
+Route::get('/event-detail', [EventController::class, 'detail'])->name('events.detail');
+Route::get('/checkout', [EventController::class, 'checkout'])->name('checkout');
 
-Route::get('/katalog', function () {
-return view('katalog');
-});
+// Ticket
+Route::get('/ticket', [TicketController::class, 'index'])->name('ticket');
 
-Route::get('/profil', function () {
-return view('profil');
-});
-
-Route::get('/bantuan', function () {
-return view('bantuan');
-});
+// Tambahan
+Route::get('/kontak', fn() => view('kontak'));
+Route::get('/profil', fn() => view('profil'));
+Route::get('/bantuan', fn() => view('bantuan'));
