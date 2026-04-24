@@ -12,27 +12,6 @@
     </button>
 </header>
 
-<<<<<<< HEAD
-Route::get('/', function () {
-    return ('<h1>Ini adalah Halaman Tentang Aplikasi Event Hub</h1>');
-});
-
-Route::get('/kontak', function () {
-return view('kontak');
-});
-
-Route::get('/katalog', function () {
-return view('katalog');
-});
-
-Route::get('/profil', function () {
-return view('profil');
-});
-
-Route::get('/bantuan', function () {
-return view('bantuan');
-});
-=======
 <!-- Categories Table -->
 <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
     <div class="overflow-x-auto">
@@ -331,4 +310,3 @@ return view('bantuan');
     }
 </script>
 @endsection
->>>>>>> 87ecf3870231a9592d977f93f5ead38bc7796c0e
