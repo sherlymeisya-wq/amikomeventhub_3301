@@ -28,9 +28,17 @@
             <tbody class="divide-y border-t">
                 @forelse($events as $index => $event)
                 @php
-                    $posterUrl = $event->poster_path && Storage::disk('public')->exists($event->poster_path)
-                        ? asset('storage/'.$event->poster_path)
-                        : 'https://via.placeholder.com/96x120?text=No+Poster';
+                    $posterUrl = null;
+                    if ($event->poster_path) {
+                        if (Str::startsWith($event->poster_path, ['http://', 'https://'])) {
+                            $posterUrl = $event->poster_path;
+                        } elseif (Str::startsWith($event->poster_path, 'assets/')) {
+                            $posterUrl = asset($event->poster_path);
+                        } elseif (Storage::disk('public')->exists($event->poster_path)) {
+                            $posterUrl = asset('storage/'.$event->poster_path);
+                        }
+                    }
+                    $posterUrl = $posterUrl ?? 'https://via.placeholder.com/96x120?text=No+Poster';
                 @endphp
                 <tr class="hover:bg-slate-50/50 transition">
                     <td class="px-8 py-6 font-bold text-slate-400">{{ $index + 1 }}</td>
