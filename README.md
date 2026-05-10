@@ -6,7 +6,7 @@ Sherly Meisha Maharani
 https://amikomeventhub-3301-main-fnfjoc.free.laravel.cloud/
 (tampilan user)
 
-https://amikomeventhub-3301-main-fnfjoc.free.laravel.cloud/admin-events.html
+https://amikomeventhub-3301-main-fnfjoc.free.laravel.cloud/admin
 (tampilan admin)
 # kelas
 SI04
