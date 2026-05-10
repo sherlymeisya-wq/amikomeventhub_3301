@@ -26,11 +26,16 @@
                 </tr>
             </thead>
             <tbody class="divide-y border-t">
-                @foreach($events as $index => $event)
+                @forelse($events as $index => $event)
+                @php
+                    $posterUrl = $event->poster_path && Storage::disk('public')->exists($event->poster_path)
+                        ? asset('storage/'.$event->poster_path)
+                        : 'https://via.placeholder.com/96x120?text=No+Poster';
+                @endphp
                 <tr class="hover:bg-slate-50/50 transition">
                     <td class="px-8 py-6 font-bold text-slate-400">{{ $index + 1 }}</td>
                     <td class="px-8 py-6">
-                        <img src="{{ asset('storage/'.$event->poster_path) }}" class="w-16 h-20 rounded-xl object-cover shadow-sm">
+                        <img src="{{ $posterUrl }}" class="w-16 h-20 rounded-xl object-cover shadow-sm">
                     </td>
                     <td class="px-8 py-6">
                         <p class="font-black text-slate-800">{{ $event->title }}</p>
@@ -52,7 +57,13 @@
                         </form>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="5" class="px-8 py-12 text-center text-slate-500">
+                        Belum ada event. Silakan tambahkan event baru atau jalankan seeder.
+                    </td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
