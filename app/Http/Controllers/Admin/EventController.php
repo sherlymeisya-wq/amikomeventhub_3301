@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 
 //
@@ -17,6 +18,10 @@ use Illuminate\Support\Facades\Storage;
 class EventController extends Controller
 {
    public function index() {
+        if (!Schema::hasTable('events')) {
+            return view('admin.events.index', ['events' => collect()]);
+        }
+
         $this->seedDefaultEventsIfEmpty();
         $events = Event::with('category')->latest()->get();
         return view('admin.events.index', compact('events'));
@@ -24,6 +29,10 @@ class EventController extends Controller
 
     protected function seedDefaultEventsIfEmpty(): void
     {
+        if (!Schema::hasTable('events') || !Schema::hasTable('categories')) {
+            return;
+        }
+
         if (Event::count() > 0) {
             return;
         }
