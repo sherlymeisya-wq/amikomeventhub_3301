@@ -72,11 +72,11 @@
                         @php
                             $currentPosterUrl = null;
                             if ($event->poster_path) {
-                                if (Str::startsWith($event->poster_path, ['http://', 'https://'])) {
+                                if (\Illuminate\Support\Str::startsWith($event->poster_path, ['http://', 'https://'])) {
                                     $currentPosterUrl = $event->poster_path;
-                                } elseif (Str::startsWith($event->poster_path, 'assets/')) {
+                                } elseif (\Illuminate\Support\Str::startsWith($event->poster_path, 'assets/')) {
                                     $currentPosterUrl = asset($event->poster_path);
-                                } elseif (Storage::disk('public')->exists($event->poster_path)) {
+                                } elseif (\Illuminate\Support\Facades\Storage::disk('public')->exists($event->poster_path)) {
                                     $currentPosterUrl = asset('storage/'.$event->poster_path);
                                 }
                             }

@@ -30,11 +30,11 @@
                 @php
                     $posterUrl = null;
                     if ($event->poster_path) {
-                        if (Str::startsWith($event->poster_path, ['http://', 'https://'])) {
+                        if (\Illuminate\Support\Str::startsWith($event->poster_path, ['http://', 'https://'])) {
                             $posterUrl = $event->poster_path;
-                        } elseif (Str::startsWith($event->poster_path, 'assets/')) {
+                        } elseif (\Illuminate\Support\Str::startsWith($event->poster_path, 'assets/')) {
                             $posterUrl = asset($event->poster_path);
-                        } elseif (Storage::disk('public')->exists($event->poster_path)) {
+                        } elseif (\Illuminate\Support\Facades\Storage::disk('public')->exists($event->poster_path)) {
                             $posterUrl = asset('storage/'.$event->poster_path);
                         }
                     }
