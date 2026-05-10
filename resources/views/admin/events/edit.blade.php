@@ -76,7 +76,7 @@
                                     $currentPosterUrl = $event->poster_path;
                                 } elseif (\Illuminate\Support\Str::startsWith($event->poster_path, 'assets/')) {
                                     $currentPosterUrl = asset($event->poster_path);
-                                } elseif (\Illuminate\Support\Facades\Storage::disk('public')->exists($event->poster_path)) {
+                                } elseif (file_exists(public_path('storage/'.$event->poster_path))) {
                                     $currentPosterUrl = asset('storage/'.$event->poster_path);
                                 }
                             }

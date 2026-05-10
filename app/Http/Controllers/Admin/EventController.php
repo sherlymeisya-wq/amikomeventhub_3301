@@ -18,12 +18,18 @@ use Illuminate\Support\Facades\Storage;
 class EventController extends Controller
 {
    public function index() {
-        if (!Schema::hasTable('events')) {
-            return view('admin.events.index', ['events' => collect()]);
+        try {
+            if (!Schema::hasTable('events')) {
+                return view('admin.events.index', ['events' => collect()]);
+            }
+
+            $this->seedDefaultEventsIfEmpty();
+            $events = Event::with('category')->latest()->get();
+        } catch (\Throwable $e) {
+            report($e);
+            $events = collect();
         }
 
-        $this->seedDefaultEventsIfEmpty();
-        $events = Event::with('category')->latest()->get();
         return view('admin.events.index', compact('events'));
     }
 
