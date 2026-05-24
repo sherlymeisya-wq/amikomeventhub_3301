@@ -38,7 +38,7 @@
 
     <div class="flex-1 space-y-6">
         <h1 class="text-5xl font-extrabold">
-            Temukan & Pesan <span class="text-indigo-600">Event Impian</span>
+            Temukan & Pesan <span class="text-indigo-600">Event tidak impian</span>
         </h1>
         <p class="text-slate-500 text-lg">
             Semua event kampus hingga nasional ada di sini.
