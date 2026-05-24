@@ -10,10 +10,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('welcome', [
-            'events' => Event::with('category')->latest()->get(),
-            'partners' => Partner::latest()->get(),
-            'categories' => Category::latest()->get(),
-        ]);
+        $events = Event::with('category')->latest()->get();
+        $partners = Partner::latest()->get();
+        $categories = Category::latest()->get();
+
+        return view('welcome', compact('events', 'partners', 'categories'));
     }
 }
