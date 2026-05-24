@@ -218,20 +218,17 @@
                 <h2 class="text-3xl font-extrabold">Partner Kami</h2>
                 <p class="text-slate-500 mt-2">Partner resmi yang membantu menghadirkan event terbaik bagi pengguna.</p>
             </div>
-            <a href="{{ route('admin.partners.index') }}" class="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition">Kelola Partner</a>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @forelse($partners as $partner)
-                <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-6 text-center">
-                    <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }} logo" class="mx-auto h-24 w-24 object-contain rounded-3xl border border-slate-200 mb-6" />
-                    <h3 class="text-lg font-bold text-slate-900">{{ $partner->name }}</h3>
-                    <p class="mt-3 text-sm text-slate-500">Logo URL ditampilkan secara langsung di homepage.</p>
-                    <a href="{{ $partner->logo_url }}" target="_blank" rel="noreferrer" class="inline-flex mt-4 px-4 py-2 rounded-full bg-indigo-50 text-indigo-700 font-semibold hover:bg-indigo-100 transition">Lihat Logo</a>
+                <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-lg transition-all p-8 flex flex-col items-center justify-center">
+                    <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }} logo" class="mx-auto h-20 w-full object-contain rounded-2xl mb-4" />
+                    <h3 class="text-base font-bold text-slate-900 text-center">{{ $partner->name }}</h3>
                 </div>
             @empty
                 <div class="col-span-full rounded-[2rem] border border-slate-100 bg-white p-10 text-center text-slate-500">
-                    Belum ada partner yang terdaftar. Silakan tambahkan partner melalui admin.
+                    Belum ada partner yang terdaftar saat ini.
                 </div>
             @endforelse
         </div>
