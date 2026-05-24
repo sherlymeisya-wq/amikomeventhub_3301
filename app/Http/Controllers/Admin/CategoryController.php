@@ -3,67 +3,82 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of all categories.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.categories.index');
+        $search = $request->query('search');
+        $categories = Category::withCount('events')
+            ->when($search, fn($query) => $query->where('name', 'LIKE', "%{$search}%"))
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('admin.categories.index', compact('categories', 'search'));
     }
 
-    /**
-     * Show the form for creating a new category.
-     */
     public function create()
     {
         return view('admin.categories.create');
     }
 
-    /**
-     * Store a newly created category in storage.
-     */
     public function store(Request $request)
     {
-        // TODO: Implement database storage logic
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil ditambahkan');
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $data['slug'] = $this->generateUniqueSlug($data['name']);
+
+        Category::create($data);
+
+        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified category.
-     */
-    public function show($id)
+    public function edit(Category $category)
     {
-        // TODO: Implement show logic
+        return view('admin.categories.edit', compact('category'));
     }
 
-    /**
-     * Show the form for editing the specified category.
-     */
-    public function edit($id)
+    public function update(Request $request, Category $category)
     {
-        // TODO: Implement edit logic
-        return view('admin.categories.edit');
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        if ($category->name !== $data['name']) {
+            $data['slug'] = $this->generateUniqueSlug($data['name'], $category->id);
+        }
+
+        $category->update($data);
+
+        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil diperbarui.');
     }
 
-    /**
-     * Update the specified category in storage.
-     */
-    public function update(Request $request, $id)
+    public function destroy(Category $category)
     {
-        // TODO: Implement database update logic
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil diperbarui');
+        $category->delete();
+
+        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');
     }
 
-    /**
-     * Remove the specified category from storage.
-     */
-    public function destroy($id)
+    private function generateUniqueSlug(string $name, ?int $ignoreId = null): string
     {
-        // TODO: Implement database delete logic
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus');
+        $slug = Str::slug($name);
+        $original = $slug;
+        $counter = 1;
+
+        while (Category::where('slug', $slug)
+            ->when($ignoreId, fn($query) => $query->where('id', '!=', $ignoreId))
+            ->exists()) {
+            $slug = "{$original}-{$counter}";
+            $counter++;
+        }
+
+        return $slug;
     }
 }

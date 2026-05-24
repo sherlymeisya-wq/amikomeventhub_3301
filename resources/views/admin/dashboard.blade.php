@@ -79,7 +79,10 @@
         <p class="text-slate-500 font-medium">Selamat datang kembali, Admin!</p>
       </div>
       <div class="flex items-center gap-4">
-        <div class="text-right hidden md:block">
+          <a href="{{ route('admin.partners.create') }}" class="px-4 py-2 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition">
+              + Tambah Partner
+          </a>
+          <div class="text-right hidden md:block">
           <p class="font-bold">Admin Super</p>
           <p class="text-xs text-slate-400">Penyelenggara Utama</p>
         </div>

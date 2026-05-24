@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PartnerController;
 
 
 
@@ -31,8 +32,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('events', AdminEventController::class);
     
     // Kategori Admin (URL: /admin/categories)
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-    
+    Route::resource('categories', CategoryController::class);
+    Route::resource('partners', PartnerController::class);
+
     // Anda bisa menambahkan rute admin lainnya di sini...
 });
 

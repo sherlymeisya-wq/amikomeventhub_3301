@@ -94,6 +94,21 @@
         </div>
     </section>
 
+    <!-- Categories Section -->
+    <section class="max-w-7xl mx-auto px-6 py-10">
+        <div class="mb-10">
+            <h2 class="text-3xl font-extrabold">Kategori yang Mendukung Platform</h2>
+            <p class="text-slate-500 mt-2">AmikomEventHub menghadirkan berbagai kategori event sesuai kebutuhan pengguna.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+            @forelse($categories as $category)
+                <span class="px-4 py-3 rounded-full bg-indigo-100 text-indigo-700 font-bold">{{ $category->name }}</span>
+            @empty
+                <p class="text-slate-500">Belum ada kategori tersedia saat ini.</p>
+            @endforelse
+        </div>
+    </section>
+
     <!-- Events Grid -->
     <section id="events" class="max-w-7xl mx-auto px-6 py-20">
         <div class="flex justify-between items-end mb-12">
@@ -193,6 +208,32 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="max-w-7xl mx-auto px-6 py-20">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+            <div>
+                <h2 class="text-3xl font-extrabold">Partner Kami</h2>
+                <p class="text-slate-500 mt-2">Partner resmi yang membantu menghadirkan event terbaik bagi pengguna.</p>
+            </div>
+            <a href="{{ route('admin.partners.index') }}" class="px-6 py-3 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition">Kelola Partner</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            @forelse($partners as $partner)
+                <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm p-6 text-center">
+                    <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }} logo" class="mx-auto h-24 w-24 object-contain rounded-3xl border border-slate-200 mb-6" />
+                    <h3 class="text-lg font-bold text-slate-900">{{ $partner->name }}</h3>
+                    <p class="mt-3 text-sm text-slate-500">Logo URL ditampilkan secara langsung di homepage.</p>
+                    <a href="{{ $partner->logo_url }}" target="_blank" rel="noreferrer" class="inline-flex mt-4 px-4 py-2 rounded-full bg-indigo-50 text-indigo-700 font-semibold hover:bg-indigo-100 transition">Lihat Logo</a>
+                </div>
+            @empty
+                <div class="col-span-full rounded-[2rem] border border-slate-100 bg-white p-10 text-center text-slate-500">
+                    Belum ada partner yang terdaftar. Silakan tambahkan partner melalui admin.
+                </div>
+            @endforelse
         </div>
     </section>
 
