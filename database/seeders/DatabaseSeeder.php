@@ -70,5 +70,8 @@ $category2 = Category::firstOrCreate(
                 'poster_path' => 'assets/workshop.png',
             ]
         );
+
+        // 4. Insert Partners
+        $this->call(PartnerSeeder::class);
     }
 }
