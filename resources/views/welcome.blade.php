@@ -46,7 +46,8 @@
     <div class="grid md:grid-cols-3 gap-6">
 
         @forelse($events as $event)
-            <div class="bg-white rounded-2xl shadow p-4">
+            <a href="{{ route('events.show', $event->id) }}"
+               class="block bg-white rounded-2xl shadow p-4 transition hover:-translate-y-1 hover:shadow-xl">
 
                 <img src="{{ $event->poster_path ? asset($event->poster_path) : asset('assets/concert.png') }}"
                      class="rounded-xl mb-3 w-full h-40 object-cover"
@@ -56,7 +57,7 @@
                 <p class="text-gray-500">
                     {{ $event->category->name ?? '-' }}
                 </p>
-            </div>
+            </a>
         @empty
             <p class="text-gray-500">Belum ada event</p>
         @endforelse
