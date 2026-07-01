@@ -5,17 +5,27 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Event;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB; // Ditambahkan agar bisa mengeksekusi perintah SQL mentah
 
 class EventSeeder extends Seeder
 {
     public function run(): void
     {
+        // 1. Matikan pengecekan foreign key agar tabel bisa dikosongkan (di-truncate)
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        // 2. Kosongkan tabel events sebelum mengisi data baru
         Event::truncate();
 
+        // 3. Nyalakan kembali pengecekan foreign key demi keamanan relasi database
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        // 4. Mengambil data kategori berdasarkan slug
         $musik = Category::where('slug', 'musik')->first();
         $workshop = Category::where('slug', 'workshop')->first();
         $hackathon = Category::where('slug', 'hackathon')->first();
 
+        // 5. Proses input data event baru
         Event::create([
             'category_id' => $musik->id,
             'title' => 'Jazz Night 2024',

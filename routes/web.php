@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\TransactionController;
 
+
 // Halaman Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -90,3 +91,6 @@ Route::get('/katalog', function () {
 Route::get('/bantuan', function () {
     return view('bantuan');
 });
+
+Route::get('/payment/{order_id}', [CheckoutController::class, 'payment'])->name('checkout.payment');
+Route::get('/success/{order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
