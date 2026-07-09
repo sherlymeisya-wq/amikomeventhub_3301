@@ -11,8 +11,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // 1. Menambahkan pengecualian CSRF untuk endpoint webhook Midtrans
+        $middleware->validateCsrfTokens(except: [
+            '/midtrans/callback', 
+        ]);
+
+        // 2. Mendaftarkan alias middleware admin untuk proteksi route dashboard (Tambahan jika diperlukan)
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
+    
